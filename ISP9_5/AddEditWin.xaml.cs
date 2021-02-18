@@ -21,8 +21,12 @@ namespace ISP9_5
     {
         Entities context = new Entities();
 
+        bool isEdit;
+        Person editPerson;
+
         public AddEditWin()
         {
+            isEdit = false;
             InitializeComponent();
             tbTitle.Text = "Добавление";
             tbID.Text = string.Empty;
@@ -30,6 +34,8 @@ namespace ISP9_5
 
         public AddEditWin(Person person)
         {
+            editPerson = person;
+            isEdit = true;
             InitializeComponent();
             tbTitle.Text = "Изменение";
             btnAddPerson.Content = "Сохранить";
@@ -46,23 +52,36 @@ namespace ISP9_5
 
         private void btnAddPerson_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if(isEdit == false)
             {
-                context.Person.Add(new Person
+                // Добавлене пользователя
+                try
                 {
-                    LastName = txtLname.Text,
-                    FirstName = txtFname.Text
-                });
-                context.SaveChanges();
+                    context.Person.Add(new Person
+                    {
+                        LastName = txtLname.Text,
+                        FirstName = txtFname.Text
+                    });
+                    context.SaveChanges();
 
-                MessageBox.Show("Запись успешно добавлена");
+                    MessageBox.Show("Запись успешно добавлена");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+            else
+            {
+                editPerson.FirstName = txtFname.Text;
+                editPerson.LastName = txtLname.Text;
+                context.SaveChanges();
+                MessageBox.Show("Запись успешно изменена");
                 this.Close();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }           
-           
+
+
         }
     }
 }
