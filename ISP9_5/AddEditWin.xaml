@@ -30,7 +30,8 @@
             <TextBox x:Name="txtFname"
                      Height="30"
                      Width="120"
-                     FontSize="18"/>
+                     FontSize="18"
+                     PreviewTextInput="txtFname_PreviewTextInput"/>
 
             <TextBlock Text="Фамилия"
                        FontSize="18"
@@ -39,7 +40,8 @@
             <TextBox x:Name="txtLname"
                      Height="30"
                      Width="120"
-                     FontSize="18"/>
+                     FontSize="18"
+                     PreviewTextInput="txtLname_PreviewTextInput"/>
 
             <Button x:Name="btnAddPerson"
                     Content="Добавить"

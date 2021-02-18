@@ -57,6 +57,19 @@ namespace ISP9_5
                 // Добавлене пользователя
                 try
                 {
+                    if (string.IsNullOrWhiteSpace(txtFname.Text))
+                    {
+                        MessageBox.Show("Поля не должны быть пустыми");
+                        return;
+                    }
+                    if (string.IsNullOrWhiteSpace(txtLname.Text))
+                    {
+                        MessageBox.Show("Поля не должны быть пустыми");
+                        return;
+                    }
+
+
+
                     context.Person.Add(new Person
                     {
                         LastName = txtLname.Text,
@@ -74,14 +87,42 @@ namespace ISP9_5
             }
             else
             {
-                editPerson.FirstName = txtFname.Text;
-                editPerson.LastName = txtLname.Text;
-                context.SaveChanges();
-                MessageBox.Show("Запись успешно изменена");
-                this.Close();
+                try
+                {
+                    editPerson.FirstName = txtFname.Text;
+                    editPerson.LastName = txtLname.Text;
+                    context.SaveChanges();
+                    MessageBox.Show("Запись успешно изменена");
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+
+                    MessageBox.Show(ex.Message);
+                }
+                
             }
 
 
+        }
+
+        private void txtFname_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            int num;
+            if (Int32.TryParse(e.Text, out num))
+            {
+                e.Handled = true;
+            }
+           
+        }
+
+        private void txtLname_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            int num;
+            if (Int32.TryParse(e.Text, out num))
+            {
+                e.Handled = true;
+            }
         }
     }
 }
